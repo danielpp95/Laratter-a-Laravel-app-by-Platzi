@@ -18,6 +18,8 @@ class CreateMessagesTable extends Migration
             $table->timestamps();
 
             $table->string('content');
+            $table->string('image');
+
         });
     }
 
