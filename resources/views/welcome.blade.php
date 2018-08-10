@@ -13,6 +13,15 @@
 </div>
 
 <div class="row">
+    <form action="/messages/create" method='post'>
+        <div class="from-group">
+            {{ csrf_field() }}
+            <input type="text" name="message" id="" class="form-control" placeholder="Qué estás pensando?" >
+        </div>
+    </form>
+</div>
+
+<div class="row">
     @forelse ($messages as $message)
         <div class="col-6">
             <img src={{ $message->image }}  class="img-thumbnail">
