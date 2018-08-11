@@ -40,5 +40,12 @@
             <h5>No hay mensajes destacados</h5>
         </div>
     @endforelse
+
+    @if (count($messages))
+    <div class="mt-2 mx-auto">
+        {{ $messages->links() }}
+    </div>
+    @endif
+
 </div>
 @endSection
