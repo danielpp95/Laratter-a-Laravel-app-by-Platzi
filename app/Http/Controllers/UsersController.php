@@ -32,7 +32,7 @@ class UsersController extends Controller
 
         $me->follows()->attach($user);
 
-        return redirect("/$username")->withSuccess('User followed');
+        return redirect("/@$username")->withSuccess('User followed');
     }
 
     private function findByUserName($username) {
