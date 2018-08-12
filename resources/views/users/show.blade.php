@@ -4,6 +4,15 @@
   {{-- Title --}}
   <h1>{{$user->name}}</h1>
 
+  {{-- Follow form --}}
+  <form action="/{{ $user->username }}/follow" method="POST"> 
+    {{csrf_field()}}
+    @if (session('success'))
+      <span class="text-success">{{session('success')}}</span>
+    @endif
+    <button class="btn btn-primary">Follow</button>
+  </form>
+
   {{-- Messages --}}
   <div class="row">
     @foreach ($userMessages as $message)
