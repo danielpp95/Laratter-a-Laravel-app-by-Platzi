@@ -17,14 +17,29 @@ class UsersController extends Controller
         ]);
     }
 
+    // Get the lis of user follows
     public function follows($username) {
         $user = $this->findByUserName($username);
 
         return view('users.follows', [
             'user' => $user,
+            'follows' => $user->follows,
+            'action' => 'follows'
         ]);
     }
 
+    // get the lis of user followers
+    public function followers($username) {
+        $user = $this->findByUserName($username);
+
+        return view('users.follows', [
+            'user' => $user,
+            'follows' => $user->followers,
+            'action' => 'followers'
+        ]);
+    }
+
+    // follow a user
     public function follow($username, Request $request) {
         $user = $this->findByUserName($username);
 
@@ -35,6 +50,18 @@ class UsersController extends Controller
         return redirect("/@$username")->withSuccess('User followed');
     }
 
+    // unfollow a user
+    public function unfollow($username, Request $request) {
+        $user = $this->findByUserName($username);
+
+        $me = $request->user();
+
+        $me->follows()->detach($user);
+
+        return redirect("/@$username")->withSuccess('User unfollowed');
+    }
+
+    // get the user by username
     private function findByUserName($username) {
         return $user = User::where('username', $username)->first();
     }
