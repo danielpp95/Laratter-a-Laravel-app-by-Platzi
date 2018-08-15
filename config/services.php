@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '2123460867909148',
+        'client_secret' => 'cd41fcf9b0da6d2625c22d82bbdb567b',
+        'redirect' => 'https://laratter.test/auth/facebook/callback'
+    ]
+
 ];
