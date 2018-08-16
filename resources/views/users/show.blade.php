@@ -10,6 +10,14 @@
 
   {{-- Is Auth --}}
   @if (Auth::check())
+    {{-- Send message --}}
+    @if (Gate::allows('dms', $user)) 
+      <form action="/{{ $user->username }}/dms" method="POST">
+        <input type="text" name="message" class="form-control">
+        <button class="btn btn-success" type="submit" >Enviar DM</button>
+      </form>
+    @endif
+
     @if (Auth::user()->isFollowing($user))
       {{-- If i'm following the user --}}
       {{-- Unfollow Form --}}
