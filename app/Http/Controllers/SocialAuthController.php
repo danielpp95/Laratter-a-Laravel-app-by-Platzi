@@ -20,8 +20,17 @@ class SocialAuthController extends Controller
     public function callback(Request $request) {
         $user = Socialite::driver('facebook')->user();
 
+        $existing = User::whereHas('socialProfiles', function ($query) use ($user) {
+            $query->where('social_id', $user->id);
+        })->first();
+
+        if ($existing !== null) {
+            auth()->login($existing);
+            return redirect('/');
+        }
+
         $data = $request->session()->flash('facebookUser', $user);
-        //  dd($user);
+        
         return view('users.facebook', [
             'user' => $user
         ]);
@@ -29,7 +38,6 @@ class SocialAuthController extends Controller
 
     public function register(Request $request) {
         $data = $request->session()->get('facebookUser');
-        // dd($data);
         $username = $request->input('username');
 
         $user = User::create([
