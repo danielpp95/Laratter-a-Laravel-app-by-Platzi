@@ -12,9 +12,10 @@
   @if (Auth::check())
     {{-- Send message --}}
     @if (Gate::allows('dms', $user)) 
-      <form action="/{{ $user->username }}/dms" method="POST">
+      <form action="/{{'@'}}{{ $user->username }}/dms" method="POST">
+        {{csrf_field()}}
         <input type="text" name="message" class="form-control">
-        <button class="btn btn-success" type="submit" >Enviar DM</button>
+        <button class="btn btn-success mt-2 mb-2 float-right" type="submit" >Enviar DM</button>
       </form>
     @endif
 
@@ -26,7 +27,7 @@
         @if (session('success'))
         <span class="text-success">{{session('success')}}</span>
         @endif
-        <button class="btn btn-danger">Unfollow</button>
+        <button class="btn btn-danger mt-2 ">Unfollow</button>
       </form>
 
     @else
