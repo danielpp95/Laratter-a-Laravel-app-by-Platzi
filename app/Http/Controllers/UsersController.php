@@ -89,6 +89,17 @@ class UsersController extends Controller
     public function showConversation(Conversation $conversation)
     {
         $conversation->load('users', 'privateMessages');
+        $validator = false;
+        $me=auth()->user();	
+        foreach($conversation->users as $user){
+            if( ($user->id)==($me->id) ){
+              $validator=true;
+            }
+        }
+
+        if($validator==false){
+            return redirect('/');
+        }
 
         return view('users.conversation', [
             'conversation' => $conversation,
