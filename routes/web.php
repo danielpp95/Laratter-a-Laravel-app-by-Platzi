@@ -26,8 +26,6 @@ Route::get('/@{username}', 'UsersController@show');
 Route::get('/@{username}/follows', 'UsersController@follows');
 Route::get('/@{username}/followers', 'UsersController@followers');
 
-
-
 // Need to be logged for
 Route::group(['middleware' => 'auth'], function () {
   // follow
@@ -41,3 +39,5 @@ Route::group(['middleware' => 'auth'], function () {
   //
   Route::get('conversations/{conversation}', 'UsersController@showConversation');
 });
+
+Route::get('/api/messages/{message}/responses', 'MessagesController@responses');

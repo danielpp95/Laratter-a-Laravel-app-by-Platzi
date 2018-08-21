@@ -11,18 +11,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // $this->call(UsersTableSeeder::class);
-        // Create 50 users
         $users = factory(App\User::class, 50)->create();
-        
 
         $users->each(function(App\User $user) use ($users) {
-            // every user has 20 messages
-            factory(App\Message::class)->times(20)->create(['user_id' => $user->id,]);
+            $messages = factory(App\Message::class)
+            	->times(20)
+                ->create([
+                    'user_id' => $user->id,
+                ]);
 
-            // every user follow 10 randomusers 
+            $messages->each(function (App\Message $message) use ($users) {
+                factory(App\Response::class, random_int(1, 10))->create([
+                    'message_id' => $message->id,
+                    'user_id' => $users->random(1)->first()->id,
+                ]);
+            });
+
             $user->follows()->sync(
                 $users->random(10)
             );
