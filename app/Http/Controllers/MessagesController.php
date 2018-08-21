@@ -33,7 +33,7 @@ class MessagesController extends Controller
     public function search (Request $request) {
         $query = $request->input('query');
 
-        $message = Message::where('content', 'LIKE', "%$query%")->get();
+        $message = Message::with('user')->where('content', 'LIKE', "%$query%")->get();
 
         return view('messages.index', [
             'messages'=> $message,
