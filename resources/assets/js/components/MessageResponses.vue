@@ -1,0 +1,42 @@
+<template>
+	<div class="row">
+		<a href="#" class="btn btn-outline-primary" @click="load" > Ver respuestas </a>
+
+		<div class="col-12 mt-2" v-for="response in responses" :key="response.id">
+			<div class="card">
+				<div class="card-header">
+					{{ response.user.name }}
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{ response.message }}</p>
+				</div>
+				<div class="card-footer text-muted">
+					{{ response.created_at }}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</template>
+
+<script>
+export default {
+	name: 'responses',
+	props: ['message'],
+	data() {
+		return {
+			responses: [],
+		}
+	},
+
+	methods: {
+		load () {
+			axios.get(`/api/messages/${this.message}/responses`)
+				.then(res => {
+					this.responses = res.data
+				})
+		}
+	}
+
+}
+</script>
