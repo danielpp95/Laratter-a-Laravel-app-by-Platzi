@@ -1,5 +1,6 @@
 <template>
   <div class="dropdown-menu">
+    <p v-if="notifications.length == 0" class="dropdown-item"> No tienes notificaciones </p>
     <a :href="notification.data.link" class="dropdown-item" v-for="notification in notifications" :key='notification.id' >
       {{ notification.data.message }}
     </a>
@@ -11,13 +12,7 @@
     props: ['user'],
     data() {
       return {
-        notifications: [
-          {
-            data: {
-              message: 'No tienes notificaciones'
-            }
-          }
-        ],
+        notifications: [],
       }
     },
     mounted() {
@@ -26,6 +21,11 @@
           if (res.data.length > 0) {
             this.notifications = res.data
           }
+
+          Echo.private(`App.User.${this.user}`)
+					.notification(notification => {
+						this.notifications.unshift(notification);
+					});
         })
     }
   }
