@@ -62,6 +62,8 @@ class UserFollowed extends Notification
     {
         return [
             'follower' => $this->follower,
+            'message' => '@'.$this->follower->username.' has followed you',
+            'link' => '/@'.$this->follower->username
         ];
     }
 }
