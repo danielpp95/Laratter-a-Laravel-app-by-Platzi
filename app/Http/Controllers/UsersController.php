@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\conversation;
 use App\privateMessage;
+use App\Notifications\UserFollowed;
 
 class UsersController extends Controller
 {
@@ -48,6 +49,8 @@ class UsersController extends Controller
         $me = $request->user();
 
         $me->follows()->attach($user);
+
+        $user->notify( new UserFollowed($me) );
 
         return redirect("/@$username")->withSuccess('User followed');
     }
