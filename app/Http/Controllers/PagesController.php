@@ -18,4 +18,10 @@ class PagesController extends Controller
         ]);
     }
 
+    public function locale (Request $request) {
+        session()->put( 'locale', $request->input('lang') );
+
+        return back();
+    }
+
 }
